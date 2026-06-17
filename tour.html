@@ -49,7 +49,7 @@
 
   <!-- ── Booking form ── -->
   <section id="booking" style="background:var(--surface-dark); position:relative; overflow:hidden;">
-    <div style="position:absolute; inset:0; background-image:url('Images/Highlights/AD5A2475.jpg'); background-size:cover; background-position:center; opacity:0.12;"></div>
+    <div style="position:absolute; inset:0; background-image:url('Images/Highlights/AD5A2475.jpg'); background-size:cover; background-position:center; opacity:0.12; pointer-events:none;"></div>
     <div class="container section-pad">
       <div class="grid-2" style="align-items:start;">
 
@@ -90,7 +90,7 @@
 
         <!-- Right: form -->
         <div class="card card-lg" id="booking-card">
-          <form id="booking-form" style="display:flex; flex-direction:column; gap:18px;" onsubmit="submitBooking(event)">
+          <form id="booking-form" style="display:flex; flex-direction:column; gap:18px;" action="https://formspree.io/f/mdavjqlb" method="POST">
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
               <div class="form-group">
                 <label class="form-label" for="name">Your name</label>
@@ -209,15 +209,7 @@
 
     renderEvents();
 
-    function submitBooking(e) {
-      e.preventDefault();
-      document.getElementById('booking-card').innerHTML = `
-        <div style="text-align:center; padding:40px 20px;">
-          <div style="font-family:var(--font-script); font-size:48px; color:var(--primary); line-height:1; margin-bottom:16px;">Thank you!</div>
-          <p style="color:var(--text-muted); font-size:var(--text-md);">We've got your request and will reach out soon. We'd love to sing with you.</p>
-        </div>`;
-    }
-  </script>
+</script>
 
 </body>
 </html>
