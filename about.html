@@ -120,7 +120,7 @@
 
         <div class="card card-lift member-card">
           <div style="border-radius:var(--radius-lg); overflow:hidden; aspect-ratio:3/4; margin-bottom:16px;">
-            <img src="Images/Highlights/AD5A2519.jpg" alt="The Bilderbacks" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+            <img src="cortni.jpg" alt="Cortni Bilderback" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
           </div>
           <h3 style="font-family:var(--font-display); font-weight:500; font-size:20px; margin:0 0 4px;">Cortni Bilderback</h3>
           <p style="margin:0; font-size:13px; color:var(--text-muted);">Vocals</p>
@@ -129,7 +129,7 @@
 
         <div class="card card-lift member-card">
           <div style="border-radius:var(--radius-lg); overflow:hidden; aspect-ratio:3/4; margin-bottom:16px;">
-            <img src="Images/Highlights/AD5A2533.jpg" alt="The Bilderbacks" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
+            <img src="calab.jpg" alt="Caleb Bilderback" style="width:100%; height:100%; object-fit:cover; object-position:center 20%;">
           </div>
           <h3 style="font-family:var(--font-display); font-weight:500; font-size:20px; margin:0 0 4px;">Caleb Bilderback</h3>
           <p style="margin:0; font-size:13px; color:var(--text-muted);">Vocals</p>
@@ -245,9 +245,10 @@
           <div style="margin-top:var(--space-7);">
             <div style="font-family:var(--font-sans); font-size:var(--text-sm); font-weight:var(--fw-semibold); letter-spacing:.12em; text-transform:uppercase; color:var(--walnut-500); margin-bottom:14px;">Follow along</div>
             <div style="display:flex; gap:12px; flex-wrap:wrap;">
-              <a href="#" class="btn btn-outline btn-sm">Facebook</a>
-              <a href="#" class="btn btn-outline btn-sm">Instagram</a>
-              <a href="#" class="btn btn-outline btn-sm">YouTube</a>
+              <a href="https://www.facebook.com/profile.php?id=100063522011609" class="btn btn-outline btn-sm" target="_blank" rel="noopener">Facebook</a>
+              <a href="https://www.instagram.com/the_bilderbacks" class="btn btn-outline btn-sm" target="_blank" rel="noopener">Instagram</a>
+              <a href="https://www.tiktok.com/@the.bilderbacks" class="btn btn-outline btn-sm" target="_blank" rel="noopener">TikTok</a>
+
             </div>
           </div>
         </div>
@@ -256,19 +257,20 @@
         <div class="card card-lg" id="contact-card">
           <h3 style="font-family:var(--font-display); font-weight:500; font-size:var(--text-xl); margin-bottom:var(--space-5);">Send us a message</h3>
           <form style="display:flex; flex-direction:column; gap:18px;" onsubmit="submitContact(event)">
+            <input type="hidden" name="_subject" value="Contact Message — The Bilderbacks">
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
               <div class="form-group">
                 <label class="form-label" for="c-name">Your name</label>
-                <input id="c-name" class="form-input" type="text" placeholder="First & last" required>
+                <input id="c-name" name="name" class="form-input" type="text" placeholder="First & last" required>
               </div>
               <div class="form-group">
                 <label class="form-label" for="c-email">Email</label>
-                <input id="c-email" class="form-input" type="email" placeholder="you@example.com" required>
+                <input id="c-email" name="email" class="form-input" type="email" placeholder="you@example.com" required>
               </div>
             </div>
             <div class="form-group">
               <label class="form-label" for="c-subject">Subject</label>
-              <select id="c-subject" class="form-select">
+              <select id="c-subject" name="subject" class="form-select">
                 <option value="">What's this about?</option>
                 <option>Booking inquiry</option>
                 <option>Question about music</option>
@@ -278,7 +280,7 @@
             </div>
             <div class="form-group">
               <label class="form-label" for="c-message">Message</label>
-              <textarea id="c-message" class="form-textarea" placeholder="We'd love to hear from you…" required></textarea>
+              <textarea id="c-message" name="message" class="form-textarea" placeholder="We'd love to hear from you…" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Send message</button>
           </form>
@@ -296,8 +298,9 @@
           <div style="font-family:var(--font-sans); font-size:13px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-400); margin-bottom:12px;">Stay in the loop</div>
           <h2 style="font-family:var(--font-display); font-weight:500; font-size:34px; color:var(--cream-50); margin-bottom:8px; max-width:16ch;">Know when we're singing near you.</h2>
           <p style="color:var(--text-on-dark-muted); max-width:40ch; margin-bottom:20px;">Tour news and new music, a few times a year. Nothing more.</p>
-          <form id="footer-form" style="display:flex; gap:12px; max-width:460px;" onsubmit="document.getElementById('footer-form').innerHTML='<p style=\'font-family:var(--font-script);font-size:28px;color:var(--gold-400)\'>Thank you — talk soon!</p>'; return false;">
-            <input type="email" class="form-input" placeholder="you@example.com" style="flex:1;" required>
+          <form id="footer-form" style="display:flex; gap:12px; max-width:460px;" onsubmit="submitNewsletter(event)">
+            <input type="hidden" name="_subject" value="Newsletter Signup — The Bilderbacks">
+            <input type="email" name="email" class="form-input" placeholder="you@example.com" style="flex:1;" required>
             <button type="submit" class="btn btn-primary">Sign up</button>
           </form>
         </div>
@@ -311,11 +314,13 @@
           </div>
           <div>
             <div class="footer-col-label">Listen & follow</div>
-            <a href="#" class="footer-link">Apple Music</a>
-            <a href="#" class="footer-link">Spotify</a>
-            <a href="#" class="footer-link">Amazon Music</a>
-            <a href="#" class="footer-link">YouTube</a>
-            <a href="#" class="footer-link">Instagram</a>
+            <a href="https://music.apple.com/us/search?term=the%20bilderbacks" class="footer-link" target="_blank" rel="noopener">Apple Music</a>
+            <a href="https://open.spotify.com/search/The%20Bilderbacks" class="footer-link" target="_blank" rel="noopener">Spotify</a>
+            <a href="https://music.amazon.com/search/The+Bilderbacks?filter=IsLibrary%7Cfalse&sc=none" class="footer-link" target="_blank" rel="noopener">Amazon Music</a>
+
+            <a href="https://www.instagram.com/the_bilderbacks" class="footer-link" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://www.facebook.com/profile.php?id=100063522011609" class="footer-link" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://www.tiktok.com/@the.bilderbacks" class="footer-link" target="_blank" rel="noopener">TikTok</a>
           </div>
         </div>
       </div>
@@ -327,13 +332,51 @@
   </footer>
 
   <script>
-    function submitContact(e) {
+    async function submitContact(e) {
       e.preventDefault();
-      document.getElementById('contact-card').innerHTML = `
-        <div style="text-align:center; padding:40px 20px;">
-          <div style="font-family:var(--font-script); font-size:48px; color:var(--primary); line-height:1; margin-bottom:16px;">Thank you!</div>
-          <p style="color:var(--text-muted); font-size:var(--text-md); max-width:32ch; margin-inline:auto;">We'll be in touch soon. Grateful for every message that finds its way to us.</p>
-        </div>`;
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+      try {
+        const res = await fetch('https://formspree.io/f/mdavjqlb', {
+          method: 'POST',
+          body: new FormData(e.target),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('contact-card').innerHTML = `
+            <div style="text-align:center; padding:40px 20px;">
+              <div style="font-family:var(--font-script); font-size:48px; color:var(--primary); line-height:1; margin-bottom:16px;">Thank you!</div>
+              <p style="color:var(--text-muted); font-size:var(--text-md); max-width:32ch; margin-inline:auto;">We'll be in touch soon. Grateful for every message that finds its way to us.</p>
+            </div>`;
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Send message';
+          alert('Something went wrong. Please try again or call us at 479-756-2174.');
+        }
+      } catch {
+        btn.disabled = false;
+        btn.textContent = 'Send message';
+        alert('Something went wrong. Please try again or call us at 479-756-2174.');
+      }
+    }
+
+    async function submitNewsletter(e) {
+      e.preventDefault();
+      try {
+        const res = await fetch('https://formspree.io/f/mdavjqlb', {
+          method: 'POST',
+          body: new FormData(e.target),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('footer-form').innerHTML = '<p style="font-family:var(--font-script);font-size:28px;color:var(--gold-400)">Thank you — talk soon!</p>';
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      } catch {
+        alert('Something went wrong. Please try again.');
+      }
     }
   </script>
 

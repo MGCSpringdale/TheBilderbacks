@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Picker — The Bilderbacks</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: system-ui, sans-serif; background: #1a1410; color: #f0ebe3; min-height: 100vh; }
+
+    .header { background: #2b2018; padding: 20px 24px; border-bottom: 1px solid #3d2f22; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+    .header h1 { font-size: 18px; font-weight: 600; color: #f0ebe3; }
+    .header p  { font-size: 13px; color: #a08060; }
+    .filter-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .filter-btn { padding: 5px 12px; border-radius: 20px; border: 1px solid #3d2f22; background: transparent; color: #a08060; cursor: pointer; font-size: 12px; font-weight: 600; transition: all .15s; }
+    .filter-btn:hover, .filter-btn.active { background: #c0724a; border-color: #c0724a; color: #fff; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; padding: 16px; }
+
+    .thumb-wrap { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 3/2; cursor: pointer; border: 2px solid transparent; transition: border-color .15s, transform .15s; }
+    .thumb-wrap:hover { border-color: #c0724a; transform: scale(1.02); }
+    .thumb-wrap.in-use { border-color: #b09040; }
+    .thumb-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumb-label { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(0,0,0,.7); font-size: 10px; padding: 4px 6px; color: #d0c0a0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .thumb-badge { position: absolute; top: 5px; left: 5px; background: #b09040; color: #fff; font-size: 9px; font-weight: 700; letter-spacing: .05em; padding: 2px 5px; border-radius: 4px; text-transform: uppercase; max-width: 90%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Lightbox */
+    .lb { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.92); z-index: 999; align-items: center; justify-content: center; flex-direction: column; gap: 16px; padding: 20px; }
+    .lb.open { display: flex; }
+    .lb img { max-width: 90vw; max-height: 80vh; border-radius: 10px; object-fit: contain; }
+    .lb-info { text-align: center; }
+    .lb-name { font-size: 20px; font-weight: 600; color: #f0ebe3; margin-bottom: 6px; }
+    .lb-usage { font-size: 13px; color: #b09040; margin-bottom: 12px; }
+    .lb-close { position: absolute; top: 16px; right: 20px; font-size: 28px; cursor: pointer; color: #a08060; background: none; border: none; }
+    .lb-copy { background: #c0724a; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .lb-copy:hover { background: #a05830; }
+    .copied { background: #406040 !important; }
+
+    .count { font-size: 12px; color: #806050; margin-left: auto; }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📷 Photo Picker — The Bilderbacks</h1>
+    <p>Click any photo to enlarge. Gold border = currently in use on the site.</p>
+  </div>
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="filter('all')">All photos</button>
+    <button class="filter-btn" onclick="filter('inuse')">In use</button>
+    <button class="filter-btn" onclick="filter('unused')">Not yet used</button>
+  </div>
+  <span class="count" id="count"></span>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<!-- Lightbox -->
+<div class="lb" id="lb" onclick="closeLb(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-info">
+    <div class="lb-name" id="lb-name"></div>
+    <div class="lb-usage" id="lb-usage"></div>
+    <button class="lb-copy" id="lb-copy" onclick="copyName()">Copy filename</button>
+  </div>
+</div>
+
+<script>
+const inUse = {
+  'family-with-kids.jpg': 'Home — hero background',
+  'family-no-kids.jpg': 'Tour — booking section background',
+  'cortni.jpg': 'About — Cortni card',
+  'calab.jpg': 'About — Caleb card',
+  'AD5A2851.jpg': 'About — gallery photo 5',
+  'AD5A2986.jpg': 'Music — hero background',
+  'AD5A3035.jpg': 'Music — performance strip 1',
+  'AD5A3213.jpg': 'Music — performance strip 2',
+  'AD5A3414.jpg': 'Music — performance strip 3',
+  'family.jpg': 'Music — performance strip 4',
+  'AD5A3572.jpg': 'About — Euel card + gallery',
+  'AD5A3613.jpg': 'About — gallery photo 4',
+  'AD5A3700.jpg': 'About — Marsha card + gallery',
+  'AD5A3731.jpg': 'About — Quincie card',
+  'AD5A3790.jpg': 'About — Blake card',
+  'AD5A3806.jpg': 'About — gallery large (top left)',
+  'AD5A3824.jpg': 'About — story section photo',
+  'AD5A3839.jpg': 'About — gallery photo 6',
+};
+
+const namedFiles = [
+  { name: 'family-with-kids.jpg',  label: 'Family with kids',    path: '' },
+  { name: 'family-no-kids.jpg',    label: 'Family without kids', path: '' },
+  { name: 'family.jpg',            label: 'Family',              path: 'Music — performance strip 4' },
+  { name: 'cortni.jpg',            label: 'Cortni',              path: '' },
+  { name: 'calab.jpg',             label: 'Caleb',               path: '' },
+];
+
+const files = ["AD5A2460.jpg","AD5A2464.jpg","AD5A2473.jpg","AD5A2475.jpg","AD5A2480.jpg","AD5A2484.jpg","AD5A2486.jpg","AD5A2489.jpg","AD5A2492.jpg","AD5A2496.jpg","AD5A2499.jpg","AD5A2503.jpg","AD5A2506.jpg","AD5A2514.jpg","AD5A2516.jpg","AD5A2517.jpg","AD5A2519.jpg","AD5A2520.jpg","AD5A2521.jpg","AD5A2523.jpg","AD5A2525.jpg","AD5A2530.jpg","AD5A2533.jpg","AD5A2535.jpg","AD5A2538.jpg","AD5A2541.jpg","AD5A2547.jpg","AD5A2550.jpg","AD5A2553.jpg","AD5A2562.jpg","AD5A2576.jpg","AD5A2579.jpg","AD5A2584.jpg","AD5A2592.jpg","AD5A2596.jpg","AD5A2598.jpg","AD5A2600.jpg","AD5A2603.jpg","AD5A2606.jpg","AD5A2608.jpg","AD5A2611.jpg","AD5A2615.jpg","AD5A2616.jpg","AD5A2619.jpg","AD5A2622.jpg","AD5A2625.jpg","AD5A2627.jpg","AD5A2633.jpg","AD5A2637.jpg","AD5A2639.jpg","AD5A2642.jpg","AD5A2645.jpg","AD5A2653.jpg","AD5A2657.jpg","AD5A2661.jpg","AD5A2667.jpg","AD5A2676.jpg","AD5A2682.jpg","AD5A2690.jpg","AD5A2695.jpg","AD5A2702.jpg","AD5A2706.jpg","AD5A2708.jpg","AD5A2714.jpg","AD5A2718.jpg","AD5A2721.jpg","AD5A2727.jpg","AD5A2729.jpg","AD5A2732.jpg","AD5A2739.jpg","AD5A2744.jpg","AD5A2751.jpg","AD5A2769.jpg","AD5A2771.jpg","AD5A2779.jpg","AD5A2788.jpg","AD5A2802.jpg","AD5A2808.jpg","AD5A2812.jpg","AD5A2815.jpg","AD5A2822.jpg","AD5A2830.jpg","AD5A2832.jpg","AD5A2837.jpg","AD5A2841.jpg","AD5A2845.jpg","AD5A2847.jpg","AD5A2851.jpg","AD5A2856.jpg","AD5A2859.jpg","AD5A2860.jpg","AD5A2870.jpg","AD5A2887.jpg","AD5A2889.jpg","AD5A2894.jpg","AD5A2895.jpg","AD5A2904.jpg","AD5A2918.jpg","AD5A2921.jpg","AD5A2925.jpg","AD5A2927.jpg","AD5A2929.jpg","AD5A2931.jpg","AD5A2939.jpg","AD5A2948.jpg","AD5A2949.jpg","AD5A2950.jpg","AD5A2954.jpg","AD5A2956.jpg","AD5A2971.jpg","AD5A2981.jpg","AD5A2984.jpg","AD5A2986.jpg","AD5A2990.jpg","AD5A2999.jpg","AD5A3000.jpg","AD5A3010.jpg","AD5A3021.jpg","AD5A3035.jpg","AD5A3048.jpg","AD5A3053.jpg","AD5A3061.jpg","AD5A3070.jpg","AD5A3078.jpg","AD5A3079.jpg","AD5A3084.jpg","AD5A3087.jpg","AD5A3095.jpg","AD5A3097.jpg","AD5A3100.jpg","AD5A3104.jpg","AD5A3106.jpg","AD5A3107.jpg","AD5A3109.jpg","AD5A3113.jpg","AD5A3122.jpg","AD5A3124.jpg","AD5A3126.jpg","AD5A3128.jpg","AD5A3130.jpg","AD5A3134.jpg","AD5A3136.jpg","AD5A3138.jpg","AD5A3140.jpg","AD5A3143.jpg","AD5A3146.jpg","AD5A3148.jpg","AD5A3150.jpg","AD5A3153.jpg","AD5A3155.jpg","AD5A3158.jpg","AD5A3164.jpg","AD5A3166.jpg","AD5A3169.jpg","AD5A3172.jpg","AD5A3175.jpg","AD5A3178.jpg","AD5A3181.jpg","AD5A3183.jpg","AD5A3188.jpg","AD5A3191.jpg","AD5A3194.jpg","AD5A3196.jpg","AD5A3203.jpg","AD5A3208.jpg","AD5A3213.jpg","AD5A3218.jpg","AD5A3223.jpg","AD5A3233.jpg","AD5A3238.jpg","AD5A3241.jpg","AD5A3244.jpg","AD5A3250.jpg","AD5A3262.jpg","AD5A3265.jpg","AD5A3267.jpg","AD5A3270.jpg","AD5A3285.jpg","AD5A3292.jpg","AD5A3299.jpg","AD5A3301.jpg","AD5A3306.jpg","AD5A3310.jpg","AD5A3315.jpg","AD5A3324.jpg","AD5A3329.jpg","AD5A3337.jpg","AD5A3343.jpg","AD5A3345.jpg","AD5A3348.jpg","AD5A3349.jpg","AD5A3365.jpg","AD5A3368.jpg","AD5A3370.jpg","AD5A3381.jpg","AD5A3386.jpg","AD5A3388.jpg","AD5A3392.jpg","AD5A3394.jpg","AD5A3398.jpg","AD5A3406.jpg","AD5A3414.jpg","AD5A3436.jpg","AD5A3442.jpg","AD5A3449.jpg","AD5A3452.jpg","AD5A3455.jpg","AD5A3459.jpg","AD5A3462.jpg","AD5A3464.jpg","AD5A3466.jpg","AD5A3469.jpg","AD5A3473.jpg","AD5A3475.jpg","AD5A3479.jpg","AD5A3481.jpg","AD5A3484.jpg","AD5A3490.jpg","AD5A3492.jpg","AD5A3494.jpg","AD5A3506.jpg","AD5A3513.jpg","AD5A3515.jpg","AD5A3517.jpg","AD5A3520.jpg","AD5A3522.jpg","AD5A3528.jpg","AD5A3531.jpg","AD5A3533.jpg","AD5A3537.jpg","AD5A3540.jpg","AD5A3542.jpg","AD5A3544.jpg","AD5A3547.jpg","AD5A3552.jpg","AD5A3555.jpg","AD5A3557.jpg","AD5A3561.jpg","AD5A3563.jpg","AD5A3572.jpg","AD5A3574.jpg","AD5A3575.jpg","AD5A3581.jpg","AD5A3583.jpg","AD5A3585.jpg","AD5A3588.jpg","AD5A3594.jpg","AD5A3598.jpg","AD5A3600.jpg","AD5A3602.jpg","AD5A3606.jpg","AD5A3608.jpg","AD5A3613.jpg","AD5A3624.jpg","AD5A3631.jpg","AD5A3632.jpg","AD5A3634.jpg","AD5A3636.jpg","AD5A3641.jpg","AD5A3647.jpg","AD5A3649.jpg","AD5A3650.jpg","AD5A3654.jpg","AD5A3656.jpg","AD5A3658.jpg","AD5A3663.jpg","AD5A3665.jpg","AD5A3671.jpg","AD5A3673.jpg","AD5A3675.jpg","AD5A3677.jpg","AD5A3679.jpg","AD5A3684.jpg","AD5A3686.jpg","AD5A3691.jpg","AD5A3693.jpg","AD5A3696.jpg","AD5A3700.jpg","AD5A3703.jpg","AD5A3705.jpg","AD5A3707.jpg","AD5A3709.jpg","AD5A3717.jpg","AD5A3719.jpg","AD5A3722.jpg","AD5A3725.jpg","AD5A3731.jpg","AD5A3734.jpg","AD5A3737.jpg","AD5A3739.jpg","AD5A3747.jpg","AD5A3749.jpg","AD5A3752.jpg","AD5A3754.jpg","AD5A3757.jpg","AD5A3759.jpg","AD5A3764.jpg","AD5A3770.jpg","AD5A3777.jpg","AD5A3778.jpg","AD5A3779.jpg","AD5A3780.jpg","AD5A3781.jpg","AD5A3783.jpg","AD5A3784.jpg","AD5A3786.jpg","AD5A3790.jpg","AD5A3793.jpg","AD5A3796.jpg","AD5A3800.jpg","AD5A3803.jpg","AD5A3806.jpg","AD5A3809.jpg","AD5A3814.jpg","AD5A3815.jpg","AD5A3818.jpg","AD5A3824.jpg","AD5A3830.jpg","AD5A3831.jpg","AD5A3839.jpg","AD5A3845.jpg"];
+
+let currentFilter = 'all';
+
+function filter(type) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  render();
+}
+
+function render() {
+  const grid = document.getElementById('grid');
+  const visible = files.filter(f => {
+    if (currentFilter === 'inuse') return inUse[f];
+    if (currentFilter === 'unused') return !inUse[f];
+    return true;
+  });
+  const namedVisible = namedFiles.filter(f => {
+    if (currentFilter === 'inuse') return inUse[f.name];
+    if (currentFilter === 'unused') return !inUse[f.name];
+    return true;
+  });
+  document.getElementById('count').textContent = (visible.length + namedVisible.length) + ' photos';
+
+  let html = '';
+  if (namedVisible.length) {
+    html += `<div style="grid-column:1/-1; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#b09040; padding:4px 0 0;">Named photos</div>`;
+    html += namedVisible.map(f => {
+      const used = inUse[f.name];
+      return `<div class="thumb-wrap ${used ? 'in-use' : ''}" onclick="openLbNamed('${f.name}','${f.label}')">
+        <img src="${f.name}" alt="${f.label}" loading="lazy">
+        ${used ? `<div class="thumb-badge">${used}</div>` : ''}
+        <div class="thumb-label">${f.label}</div>
+      </div>`;
+    }).join('');
+    html += `<div style="grid-column:1/-1; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#806050; padding:8px 0 0;">All photos (${visible.length})</div>`;
+  }
+
+  html += visible.map(f => {
+    const used = inUse[f];
+    return `<div class="thumb-wrap ${used ? 'in-use' : ''}" onclick="openLb('${f}')">
+      <img src="Images/Highlights/${f}" alt="${f}" loading="lazy">
+      ${used ? `<div class="thumb-badge">${used}</div>` : ''}
+      <div class="thumb-label">${f}</div>
+    </div>`;
+  }).join('');
+
+  grid.innerHTML = html;
+}
+
+function openLb(f) {
+  const used = inUse[f];
+  document.getElementById('lb-img').src = 'Images/Highlights/' + f;
+  document.getElementById('lb-name').textContent = f;
+  document.getElementById('lb-usage').textContent = used ? '⭐ Currently used: ' + used : 'Not yet used on the site';
+  const btn = document.getElementById('lb-copy');
+  btn.textContent = 'Copy filename';
+  btn.classList.remove('copied');
+  btn.dataset.name = f;
+  document.getElementById('lb').classList.add('open');
+}
+
+function openLbNamed(name, label) {
+  const used = inUse[name];
+  document.getElementById('lb-img').src = name;
+  document.getElementById('lb-name').textContent = label + ' (' + name + ')';
+  document.getElementById('lb-usage').textContent = used ? '⭐ Currently used: ' + used : 'Not yet used on the site';
+  const btn = document.getElementById('lb-copy');
+  btn.textContent = 'Copy filename';
+  btn.classList.remove('copied');
+  btn.dataset.name = name;
+  document.getElementById('lb').classList.add('open');
+}
+
+function closeLb(e) {
+  if (!e || e.target === document.getElementById('lb') || e.target.classList.contains('lb-close')) {
+    document.getElementById('lb').classList.remove('open');
+  }
+}
+
+function copyName() {
+  const btn = document.getElementById('lb-copy');
+  navigator.clipboard.writeText(btn.dataset.name).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+  });
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.getElementById('lb').classList.remove('open'); });
+
+render();
+</script>
+</body>
+</html>

@@ -32,7 +32,7 @@
   <!-- ── Hero ── -->
   <section style="position:relative; min-height:640px; display:flex; align-items:flex-end; overflow:hidden; background:var(--walnut-800);">
     <!-- Full-bleed family photo -->
-    <div style="position:absolute; inset:0; background-image:url('Images/Highlights/AD5A2460.jpg'); background-size:cover; background-position:center 30%;"></div>
+    <div style="position:absolute; inset:0; background-image:url('family-with-kids.jpg'); background-size:cover; background-position:center 30%;"></div>
     <!-- Bottom scrim for text legibility -->
     <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(43,32,24,0.90) 0%, rgba(43,32,24,0.55) 45%, rgba(43,32,24,0.15) 100%);"></div>
     <div class="container" style="position:relative; width:100%; padding-top:5rem; padding-bottom:4.5rem;">
@@ -170,8 +170,9 @@
           <div style="font-family:var(--font-sans); font-size:13px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-400); margin-bottom:12px;">Stay in the loop</div>
           <h2 style="font-family:var(--font-display); font-weight:500; font-size:34px; color:var(--cream-50); margin-bottom:8px; max-width:16ch;">Know when we're singing near you.</h2>
           <p style="color:var(--text-on-dark-muted); max-width:40ch; margin-bottom:20px;">Tour news and new music, a few times a year. Nothing more.</p>
-          <form id="footer-form" style="display:flex; gap:12px; max-width:460px;" onsubmit="document.getElementById('footer-form').innerHTML='<p style=\'font-family:var(--font-script);font-size:28px;color:var(--gold-400)\'>Thank you — talk soon!</p>'; return false;">
-            <input type="email" class="form-input" placeholder="you@example.com" style="flex:1;" required>
+          <form id="footer-form" style="display:flex; gap:12px; max-width:460px;" onsubmit="submitNewsletter(event)">
+            <input type="hidden" name="_subject" value="Newsletter Signup — The Bilderbacks">
+            <input type="email" name="email" class="form-input" placeholder="you@example.com" style="flex:1;" required>
             <button type="submit" class="btn btn-primary">Sign up</button>
           </form>
         </div>
@@ -185,12 +186,13 @@
           </div>
           <div>
             <div class="footer-col-label">Listen & follow</div>
-            <a href="#" class="footer-link">Apple Music</a>
-            <a href="#" class="footer-link">Spotify</a>
-            <a href="#" class="footer-link">Amazon Music</a>
-            <a href="#" class="footer-link">Facebook</a>
-            <a href="#" class="footer-link">YouTube</a>
-            <a href="#" class="footer-link">Instagram</a>
+            <a href="https://music.apple.com/us/search?term=the%20bilderbacks" class="footer-link" target="_blank" rel="noopener">Apple Music</a>
+            <a href="https://open.spotify.com/search/The%20Bilderbacks" class="footer-link" target="_blank" rel="noopener">Spotify</a>
+            <a href="https://music.amazon.com/search/The+Bilderbacks?filter=IsLibrary%7Cfalse&sc=none" class="footer-link" target="_blank" rel="noopener">Amazon Music</a>
+            <a href="https://www.facebook.com/profile.php?id=100063522011609" class="footer-link" target="_blank" rel="noopener">Facebook</a>
+
+            <a href="https://www.instagram.com/the_bilderbacks" class="footer-link" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://www.tiktok.com/@the.bilderbacks" class="footer-link" target="_blank" rel="noopener">TikTok</a>
           </div>
         </div>
       </div>
@@ -201,5 +203,24 @@
     </div>
   </footer>
 
+  <script>
+    async function submitNewsletter(e) {
+      e.preventDefault();
+      try {
+        const res = await fetch('https://formspree.io/f/mdavjqlb', {
+          method: 'POST',
+          body: new FormData(e.target),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('footer-form').innerHTML = '<p style="font-family:var(--font-script);font-size:28px;color:var(--gold-400)">Thank you — talk soon!</p>';
+        } else {
+          alert('Something went wrong. Please try again.');
+        }
+      } catch {
+        alert('Something went wrong. Please try again.');
+      }
+    }
+  </script>
 </body>
 </html>
