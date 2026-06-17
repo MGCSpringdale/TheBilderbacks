@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour Dates — The Bilderbacks</title>
+  <meta name="description" content="See upcoming Bilderbacks events and book the family for your church, revival, or festival. Call 479-756-2174 or fill out our inquiry form.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Caveat:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="container inner">
+      <a href="index.html" class="site-logo">
+        <span class="logo-mark">TBF</span>
+        <span class="logo-name">The Bilderbacks</span>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html"  class="nav-link">Home</a>
+        <a href="music.html"  class="nav-link">Music</a>
+        <a href="tour.html"   class="nav-link active">Tour Dates</a>
+        <a href="about.html"  class="nav-link">About</a>
+        <a href="#booking"    class="btn btn-sm btn-primary nav-cta" style="margin-left:8px;">Bring us to your church</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Page header ── -->
+  <section class="bg-cream" style="padding-block:var(--space-9);">
+    <div class="container text-center" style="max-width:52ch;">
+      <span class="sh-eyebrow" style="display:block; margin-bottom:var(--space-3);">On the road</span>
+      <h1 class="sh-title" style="font-size:var(--text-3xl);">Where we're singing</h1>
+      <p class="sh-desc">Come see us this summer. Pull up a pew — there's always room for one more.</p>
+    </div>
+  </section>
+
+  <!-- ── Event list ── -->
+  <section class="section-pad">
+    <div class="container" style="max-width:880px;">
+
+      <div id="event-list" style="display:flex; flex-direction:column; gap:14px;"></div>
+
+    </div>
+  </section>
+
+  <!-- ── Booking form ── -->
+  <section id="booking" style="background:var(--surface-dark);">
+    <div class="container section-pad">
+      <div class="grid-2" style="align-items:start;">
+
+        <!-- Left: copy -->
+        <div>
+          <span class="sh-eyebrow sh-eyebrow-dark" style="display:block; margin-bottom:var(--space-3);">Invitations</span>
+          <h2 class="sh-title sh-title-dark" style="font-size:var(--text-2xl); margin-bottom:var(--space-4);">Bring us to your church</h2>
+          <p class="sh-desc sh-desc-dark">We'd love to spend an evening singing with your congregation. Tell us a little about your gathering — we'll be in touch soon.</p>
+
+          <div style="margin-top:var(--space-7);">
+            <figure style="margin:0;">
+              <blockquote class="scripture-wrap">
+                <p class="scripture-verse" style="color:var(--walnut-300);">"How good and pleasant it is when God's people dwell together."</p>
+                <figcaption><span class="scripture-ref">Psalm 133:1</span></figcaption>
+              </blockquote>
+            </figure>
+          </div>
+
+          <div style="margin-top:var(--space-7); display:flex; flex-direction:column; gap:var(--space-4);">
+            <div style="display:flex; align-items:center; gap:12px; color:var(--text-on-dark-muted);">
+              <span style="color:var(--rust-400);">♪</span>
+              <span>Available for churches, revivals, and festivals</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; color:var(--text-on-dark-muted);">
+              <span style="color:var(--rust-400);">👤</span>
+              <span><strong style="color:var(--cream-100);">Desiree Ham</strong> · Director of Communications &amp; Engagements</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; color:var(--text-on-dark-muted);">
+              <span style="color:var(--rust-400);">✉</span>
+              <a href="mailto:booking@thebilderbacks.org" style="color:var(--cream-100); text-decoration:none;">booking@thebilderbacks.org</a>
+            </div>
+            <div style="display:flex; align-items:center; gap:12px; color:var(--text-on-dark-muted);">
+              <span style="color:var(--rust-400);">☎</span>
+              <a href="tel:4797562174" style="color:var(--cream-100); text-decoration:none;">479-756-2174</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: form -->
+        <div class="card card-lg" id="booking-card">
+          <form id="booking-form" style="display:flex; flex-direction:column; gap:18px;" onsubmit="submitBooking(event)">
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <div class="form-group">
+                <label class="form-label" for="name">Your name</label>
+                <input id="name" class="form-input" type="text" placeholder="First & last" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="email">Email</label>
+                <input id="email" class="form-input" type="email" placeholder="you@example.com" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="phone">Phone number</label>
+              <input id="phone" class="form-input" type="tel" placeholder="(555) 000-0000">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="venue">Church / venue</label>
+              <input id="venue" class="form-input" type="text" placeholder="Where will we be singing?" required>
+              <span class="form-hint">Church, revival, or festival — we'd be honored.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="date">Ideal date or season</label>
+              <input id="date" class="form-input" type="text" placeholder="e.g. September, Fall 2026">
+              <span class="form-hint">A general time frame is fine — we'll work together from there.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="message">Anything else we should know?</label>
+              <textarea id="message" class="form-textarea" placeholder="Service type, expected attendance, special requests…"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">Send invitation</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="container" style="padding-block:var(--space-10) var(--space-8);">
+      <div class="footer-grid">
+        <div>
+          <div style="font-family:var(--font-sans); font-size:13px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-400); margin-bottom:12px;">Stay in the loop</div>
+          <h2 style="font-family:var(--font-display); font-weight:500; font-size:34px; color:var(--cream-50); margin-bottom:8px; max-width:16ch;">Know when we're singing near you.</h2>
+          <p style="color:var(--text-on-dark-muted); max-width:40ch; margin-bottom:20px;">Tour news and new music, a few times a year. Nothing more.</p>
+          <form id="footer-form" style="display:flex; gap:12px; max-width:460px;" onsubmit="document.getElementById('footer-form').innerHTML='<p style=\'font-family:var(--font-script);font-size:28px;color:var(--gold-400)\'>Thank you — talk soon!</p>'; return false;">
+            <input type="email" class="form-input" placeholder="you@example.com" style="flex:1;" required>
+            <button type="submit" class="btn btn-primary">Sign up</button>
+          </form>
+        </div>
+        <div class="footer-links-group">
+          <div>
+            <div class="footer-col-label">Explore</div>
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="music.html" class="footer-link">Music</a>
+            <a href="tour.html"  class="footer-link">Events</a>
+            <a href="about.html" class="footer-link">About</a>
+          </div>
+          <div>
+            <div class="footer-col-label">Listen & follow</div>
+            <a href="#" class="footer-link">Apple Music</a>
+            <a href="#" class="footer-link">Spotify</a>
+            <a href="#" class="footer-link">Amazon Music</a>
+            <a href="#" class="footer-link">YouTube</a>
+            <a href="#" class="footer-link">Instagram</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 The Bilderbacks · Springdale, Arkansas · <a href="tel:4797562174" style="color:inherit; text-decoration:none;">479-756-2174</a></span>
+        <span style="font-family:var(--font-display); font-style:italic; font-size:15px; color:var(--gold-400);">"Make a joyful noise." — Psalm 100:1</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const events = [
+      { mon:'Jun', day:'21', dow:'Sat', venue:'Grace Fellowship Church',   city:'Springdale, AR', time:'6:00 PM', tag:'Free',    tone:'success' },
+      { mon:'Jul', day:'12', dow:'Sat', venue:'First Baptist Church',       city:'Rogers, AR',     time:'7:00 PM', tag:'All ages', tone:'walnut' },
+      { mon:'Jul', day:'27', dow:'Sun', venue:'Gospel Sing Night',          city:'Branson, MO',    time:'5:30 PM', tag:'Tickets', tone:'denim' },
+      { mon:'Aug', day:'09', dow:'Sat', venue:'Ozark Worship Center',       city:'Harrison, AR',   time:'6:30 PM', tag:'Free',    tone:'success' },
+      { mon:'Aug', day:'24', dow:'Sun', venue:'Cornerstone Chapel',         city:'Tulsa, OK',      time:'6:00 PM', tag:'Tickets', tone:'denim' },
+      { mon:'Sep', day:'13', dow:'Sat', venue:'Harvest Gospel Festival',    city:'Little Rock, AR',time:'4:00 PM', tag:'Tickets', tone:'denim' },
+    ];
+
+    const rsvp = {};
+
+    function toggleRsvp(i) {
+      rsvp[i] = !rsvp[i];
+      renderEvents();
+    }
+
+    function renderEvents() {
+      const list = document.getElementById('event-list');
+      list.innerHTML = events.map((e, i) => {
+        const going = rsvp[i];
+        const btnLabel = going ? '✓ You\'re going' : (e.tag === 'Tickets' ? 'Get tickets' : 'RSVP');
+        const btnClass = going ? 'btn btn-secondary' : 'btn btn-primary';
+        return `
+          <div class="card card-sm">
+            <div style="display:flex; align-items:center; gap:22px; flex-wrap:wrap;">
+              <div style="text-align:center; flex:none; width:78px; background:var(--cream-100); border-radius:var(--radius-md); padding:10px 0;">
+                <div style="font-family:var(--font-sans); font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--rust-600);">${e.mon}</div>
+                <div style="font-family:var(--font-display); font-weight:500; font-size:36px; line-height:1; color:var(--walnut-900);">${e.day}</div>
+                <div style="font-size:12px; color:var(--text-muted);">${e.dow}</div>
+              </div>
+              <div style="flex:1; min-width:220px;">
+                <div style="margin-bottom:8px;"><span class="badge badge-${e.tone}">${e.tag}</span></div>
+                <h3 style="font-family:var(--font-display); font-weight:500; font-size:22px; margin:0 0 4px;">${e.venue}</h3>
+                <p style="margin:0; color:var(--text-muted); font-size:15px;">${e.city} · ${e.time}</p>
+              </div>
+              <button class="${btnClass}" onclick="toggleRsvp(${i})">${btnLabel}</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    renderEvents();
+
+    function submitBooking(e) {
+      e.preventDefault();
+      document.getElementById('booking-card').innerHTML = `
+        <div style="text-align:center; padding:40px 20px;">
+          <div style="font-family:var(--font-script); font-size:48px; color:var(--primary); line-height:1; margin-bottom:16px;">Thank you!</div>
+          <p style="color:var(--text-muted); font-size:var(--text-md);">We've got your request and will reach out soon. We'd love to sing with you.</p>
+        </div>`;
+    }
+  </script>
+
+</body>
+</html>

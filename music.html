@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music — The Bilderbacks</title>
+  <meta name="description" content="Listen to The Bilderbacks on Apple Music, Spotify, and Amazon Music. Albums include Full Circle and Our Family Heritage.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&family=Hanken+Grotesk:wght@400;500;600;700&family=Caveat:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header class="site-header">
+    <div class="container inner">
+      <a href="index.html" class="site-logo">
+        <span class="logo-mark">TBF</span>
+        <span class="logo-name">The Bilderbacks</span>
+      </a>
+      <nav class="site-nav">
+        <a href="index.html"  class="nav-link">Home</a>
+        <a href="music.html"  class="nav-link active">Music</a>
+        <a href="tour.html"   class="nav-link">Tour Dates</a>
+        <a href="about.html"  class="nav-link">About</a>
+        <a href="tour.html"   class="btn btn-sm btn-primary nav-cta" style="margin-left:8px;">Bring us to your church</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Page header ── -->
+  <section class="bg-cream" style="padding-block:var(--space-9);">
+    <div class="container text-center" style="max-width:52ch;">
+      <span class="sh-eyebrow" style="display:block; margin-bottom:var(--space-3);">The music</span>
+      <h1 class="sh-title" style="font-size:var(--text-3xl);">Four albums, one family</h1>
+      <p class="sh-desc">From our very first recording to <em>Full Circle</em> — every song is sung with the same heart we carry on stage. Find us wherever you stream.</p>
+    </div>
+  </section>
+
+  <!-- ── Featured album: Full Circle ── -->
+  <section class="section-pad">
+    <div class="container">
+      <div style="display:grid; grid-template-columns:380px 1fr; gap:var(--space-9); align-items:start;">
+
+        <!-- Sticky cover + meta -->
+        <div style="position:sticky; top:90px;">
+          <div class="album-cover">
+            <div class="album-cover-inner">
+              <div class="album-subtitle">The Bilderbacks</div>
+              <div class="album-title">Full Circle</div>
+            </div>
+          </div>
+          <div style="margin-top:20px;">
+            <span class="badge badge-rust" style="margin-bottom:12px;">Latest album</span>
+            <h2 style="font-family:var(--font-display); font-weight:500; font-size:28px; margin:12px 0 4px;">Full Circle</h2>
+            <p style="color:var(--text-muted); margin:0 0 18px;">Southern Gospel · The Bilderbacks</p>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="setActive(1)">▶ Play album</button>
+              <a href="#streaming" class="btn btn-outline">Where to listen</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track list -->
+        <div class="card" style="padding:var(--space-3);">
+          <div id="tracklist"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Other albums ── -->
+  <section class="bg-cream section-pad">
+    <div class="container">
+      <div class="text-center" style="max-width:52ch; margin-inline:auto; margin-bottom:var(--space-8);">
+        <span class="sh-eyebrow" style="display:block; margin-bottom:var(--space-3);">Discography</span>
+        <h2 class="sh-title">More from the Bilderbacks</h2>
+      </div>
+      <div class="grid-3" style="gap:24px;">
+
+        <div class="card card-lift">
+          <div style="border-radius:var(--radius-md); overflow:hidden; aspect-ratio:1/1; background:linear-gradient(135deg, var(--denim-700), var(--denim-900,#243649) 60%, var(--walnut-800)); margin-bottom:20px; display:flex; flex-direction:column; justify-content:flex-end; padding:7%; position:relative;">
+            <div style="position:absolute; inset:0; background:radial-gradient(100% 80% at 30% 10%, rgba(84,117,154,0.4), transparent 60%);"></div>
+            <div style="position:relative;">
+              <div style="font-family:var(--font-sans); font-size:10px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--gold-400); margin-bottom:6px;">The Bilderbacks</div>
+              <div style="font-family:var(--font-display); font-weight:500; font-size:clamp(18px,3vw,28px); color:var(--cream-50); line-height:1.1;">Our Family Heritage</div>
+            </div>
+          </div>
+          <span class="badge badge-denim" style="margin-bottom:8px;">Album</span>
+          <h3 style="font-family:var(--font-display); font-weight:500; font-size:20px; margin:8px 0 4px;">Our Family Heritage</h3>
+          <p style="color:var(--text-muted); font-size:14px; margin:0 0 16px;">A celebration of the music and faith passed down through generations.</p>
+          <a href="#streaming" class="btn btn-ghost" style="padding-left:0;">Listen now →</a>
+        </div>
+
+        <div class="card card-lift">
+          <div style="border-radius:var(--radius-md); overflow:hidden; aspect-ratio:1/1; background:linear-gradient(135deg, var(--walnut-600), var(--walnut-800) 60%, var(--rust-600)); margin-bottom:20px; display:flex; flex-direction:column; justify-content:flex-end; padding:7%; position:relative;">
+            <div style="position:absolute; inset:0; background:radial-gradient(100% 80% at 60% 20%, rgba(176,134,58,0.3), transparent 60%);"></div>
+            <div style="position:relative;">
+              <div style="font-family:var(--font-sans); font-size:10px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--gold-400); margin-bottom:6px;">The Bilderbacks</div>
+              <div style="font-family:var(--font-display); font-weight:500; font-size:clamp(18px,3vw,28px); color:var(--cream-50); line-height:1.1;">Still Singing</div>
+            </div>
+          </div>
+          <span class="badge badge-walnut" style="margin-bottom:8px;">Album</span>
+          <h3 style="font-family:var(--font-display); font-weight:500; font-size:20px; margin:8px 0 4px;">Still Singing</h3>
+          <p style="color:var(--text-muted); font-size:14px; margin:0 0 16px;">Songs of faithfulness for the long road.</p>
+          <a href="#streaming" class="btn btn-ghost" style="padding-left:0;">Listen now →</a>
+        </div>
+
+        <div class="card card-lift">
+          <div style="border-radius:var(--radius-md); overflow:hidden; aspect-ratio:1/1; background:linear-gradient(135deg, var(--rust-700), var(--walnut-800) 55%, var(--walnut-900)); margin-bottom:20px; display:flex; flex-direction:column; justify-content:flex-end; padding:7%; position:relative;">
+            <div style="position:absolute; inset:0; background:radial-gradient(100% 80% at 70% 15%, rgba(226,153,123,0.3), transparent 55%);"></div>
+            <div style="position:relative;">
+              <div style="font-family:var(--font-sans); font-size:10px; font-weight:600; letter-spacing:.22em; text-transform:uppercase; color:var(--gold-400); margin-bottom:6px;">The Bilderbacks</div>
+              <div style="font-family:var(--font-display); font-weight:500; font-size:clamp(18px,3vw,28px); color:var(--cream-50); line-height:1.1;">Coming Home</div>
+            </div>
+          </div>
+          <span class="badge badge-walnut" style="margin-bottom:8px;">Album</span>
+          <h3 style="font-family:var(--font-display); font-weight:500; font-size:20px; margin:8px 0 4px;">Coming Home</h3>
+          <p style="color:var(--text-muted); font-size:14px; margin:0 0 16px;">The debut that started it all — songs of Gospel hope.</p>
+          <a href="#streaming" class="btn btn-ghost" style="padding-left:0;">Listen now →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Streaming links ── -->
+  <section id="streaming" class="section-pad">
+    <div class="container text-center">
+      <span class="sh-eyebrow" style="display:block; margin-bottom:var(--space-3);">Listen anywhere</span>
+      <h2 class="sh-title" style="margin-inline:auto; max-width:20ch; margin-bottom:var(--space-4);">Find us where you stream</h2>
+      <p style="color:var(--text-muted); max-width:44ch; margin-inline:auto; margin-bottom:var(--space-8);">All four albums are available on the platforms below. Follow us to hear new music first.</p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+        <a href="#" class="stream-btn">♪ Apple Music</a>
+        <a href="#" class="stream-btn">♪ Spotify</a>
+        <a href="#" class="stream-btn">♪ Amazon Music</a>
+        <a href="#" class="stream-btn">▶ YouTube</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Scripture ── -->
+  <section class="bg-cream" style="padding-block:var(--space-9);">
+    <div class="container">
+      <figure style="margin:0;">
+        <blockquote class="scripture-wrap centered">
+          <p class="scripture-verse lg">"Sing unto him a new song; play skilfully with a loud noise."</p>
+          <figcaption><span class="scripture-ref">Psalm 33:3</span></figcaption>
+        </blockquote>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer class="site-footer">
+    <div class="container" style="padding-block:var(--space-10) var(--space-8);">
+      <div class="footer-grid">
+        <div>
+          <div style="font-family:var(--font-sans); font-size:13px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--gold-400); margin-bottom:12px;">Stay in the loop</div>
+          <h2 style="font-family:var(--font-display); font-weight:500; font-size:34px; color:var(--cream-50); margin-bottom:8px; max-width:16ch;">Know when we're singing near you.</h2>
+          <p style="color:var(--text-on-dark-muted); max-width:40ch; margin-bottom:20px;">Tour news and new music, a few times a year. Nothing more.</p>
+          <form id="footer-form" style="display:flex; gap:12px; max-width:460px;" onsubmit="document.getElementById('footer-form').innerHTML='<p style=\'font-family:var(--font-script);font-size:28px;color:var(--gold-400)\'>Thank you — talk soon!</p>'; return false;">
+            <input type="email" class="form-input" placeholder="you@example.com" style="flex:1;" required>
+            <button type="submit" class="btn btn-primary">Sign up</button>
+          </form>
+        </div>
+        <div class="footer-links-group">
+          <div>
+            <div class="footer-col-label">Explore</div>
+            <a href="index.html" class="footer-link">Home</a>
+            <a href="music.html" class="footer-link">Music</a>
+            <a href="tour.html"  class="footer-link">Events</a>
+            <a href="about.html" class="footer-link">About</a>
+          </div>
+          <div>
+            <div class="footer-col-label">Listen & follow</div>
+            <a href="#" class="footer-link">Apple Music</a>
+            <a href="#" class="footer-link">Spotify</a>
+            <a href="#" class="footer-link">Amazon Music</a>
+            <a href="#" class="footer-link">YouTube</a>
+            <a href="#" class="footer-link">Instagram</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 The Bilderbacks · Springdale, Arkansas · <a href="tel:4797562174" style="color:inherit; text-decoration:none;">479-756-2174</a></span>
+        <span style="font-family:var(--font-display); font-style:italic; font-size:15px; color:var(--gold-400);">"Make a joyful noise." — Psalm 100:1</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const tracks = [
+      { n: 1, t: 'Full Circle',        len: '3:42' },
+      { n: 2, t: 'Homeward Bound',     len: '4:05' },
+      { n: 3, t: 'Around the Piano',   len: '3:18' },
+      { n: 4, t: 'Every Word',         len: '3:55' },
+      { n: 5, t: 'Joyful Noise',       len: '2:58' },
+      { n: 6, t: 'Three Generations',  len: '4:21' },
+      { n: 7, t: 'Grace Enough',       len: '3:36' },
+      { n: 8, t: 'Singing Me Home',    len: '5:02' },
+    ];
+
+    let current = 1;
+
+    function setActive(n) {
+      current = n;
+      render();
+    }
+
+    function render() {
+      const list = document.getElementById('tracklist');
+      list.innerHTML = tracks.map(tr => {
+        const active = tr.n === current;
+        return `<button class="track-row ${active ? 'active' : ''}" onclick="setActive(${tr.n})">
+          <span class="track-num">${active ? '▶' : tr.n}</span>
+          <span class="track-title">${tr.t}</span>
+          <span class="track-len">${tr.len}</span>
+        </button>`;
+      }).join('');
+    }
+
+    render();
+  </script>
+
+</body>
+</html>
