@@ -98,3 +98,32 @@ if (lightbox && lightboxImg && closeBtn) {
     if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
   });
 }
+
+
+// Booking form: submit to Formspree without leaving the page
+const bookingForm = document.getElementById('booking-form');
+if (bookingForm) {
+  const status = bookingForm.querySelector('.form-status');
+  const btn = bookingForm.querySelector('button[type="submit"]');
+  bookingForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    btn.disabled = true;
+    status.textContent = 'Sending…';
+    try {
+      const res = await fetch(bookingForm.action, {
+        method: 'POST',
+        body: new FormData(bookingForm),
+        headers: { Accept: 'application/json' }
+      });
+      if (res.ok) {
+        bookingForm.reset();
+        status.textContent = "Thank you — we'll be in touch soon.";
+      } else {
+        status.textContent = 'Something went wrong. Please email booking@thebilderbacks.org or call 479-756-2174.';
+      }
+    } catch (err) {
+      status.textContent = 'Something went wrong. Please email booking@thebilderbacks.org or call 479-756-2174.';
+    }
+    btn.disabled = false;
+  });
+}
