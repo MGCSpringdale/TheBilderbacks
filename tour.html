@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
@@ -36,48 +36,14 @@
   <section class="page-hero">
     <span class="eyebrow">On the road</span>
     <h1>Where we're singing.</h1>
-    <p>Come see us this summer. Pull up a pew — there's always room for one more.</p>
+    <p>Pull up a pew — there's always room for one more.</p>
   </section>
 
   <section class="live-section" style="padding-top:0;">
-    <div class="tour-list">
-      <a class="tour-item reveal" href="#" data-cursor="Details">
-        <div class="date-block"><span class="day">21</span><span class="month">Jun</span></div>
-        <div><p class="venue">Grace Fellowship Church</p><p class="place">Springdale, AR · 6:00 PM</p></div>
-        <span class="tag">Free</span>
-        <span class="go-arrow">&rarr;</span>
-      </a>
-      <a class="tour-item reveal" href="#" data-cursor="Details">
-        <div class="date-block"><span class="day">12</span><span class="month">Jul</span></div>
-        <div><p class="venue">First Baptist Church</p><p class="place">Rogers, AR · 7:00 PM</p></div>
-        <span class="tag">All ages</span>
-        <span class="go-arrow">&rarr;</span>
-      </a>
-      <a class="tour-item reveal" href="#" data-cursor="Details">
-        <div class="date-block"><span class="day">27</span><span class="month">Jul</span></div>
-        <div><p class="venue">Gospel Sing Night</p><p class="place">Branson, MO · 5:30 PM</p></div>
-        <span class="tag">Tickets</span>
-        <span class="go-arrow">&rarr;</span>
-      </a>
-      <a class="tour-item reveal" href="#" data-cursor="Details">
-        <div class="date-block"><span class="day">09</span><span class="month">Aug</span></div>
-        <div><p class="venue">Ozark Worship Center</p><p class="place">Harrison, AR · 6:30 PM</p></div>
-        <span class="tag">Free</span>
-        <span class="go-arrow">&rarr;</span>
-      </a>
-      <a class="tour-item reveal" href="#" data-cursor="Details">
-        <div class="date-block"><span class="day">24</span><span class="month">Aug</span></div>
-        <div><p class="venue">Cornerstone Chapel</p><p class="place">Tulsa, OK · 6:00 PM</p></div>
-        <span class="tag">Tickets</span>
-        <span class="go-arrow">&rarr;</span>
-      </a>
-      <a class="tour-item reveal" href="#" data-cursor="Details">
-        <div class="date-block"><span class="day">13</span><span class="month">Sep</span></div>
-        <div><p class="venue">Harvest Gospel Festival</p><p class="place">Little Rock, AR · 4:00 PM</p></div>
-        <span class="tag">Tickets</span>
-        <span class="go-arrow">&rarr;</span>
-      </a>
-    </div>
+    <div class="tour-empty reveal">
+        <p class="tour-empty-title">New dates coming soon.</p>
+        <p class="tour-empty-body">We're booking our next season now. Follow along on <a href="https://www.instagram.com/the_bilderbacks" target="_blank" rel="noopener">Instagram</a> or <a href="https://www.facebook.com/profile.php?id=100063522011609" target="_blank" rel="noopener">Facebook</a> for announcements &mdash; or invite us to sing at your church.</p>
+      </div>
   </section>
 
   <figure class="editorial-photo reveal">
@@ -99,18 +65,32 @@
   <section class="contact reveal">
     <div>
       <h2>Send an invitation</h2>
-      <ul class="contact-list">
+      <p style="color:var(--ivory-dim); max-width:46ch;">Tell us a little about your gathering and we'll be in touch soon.</p>
+      <form class="booking-form" id="booking-form" action="https://formspree.io/f/mdavjqlb" method="POST">
+        <input type="hidden" name="_subject" value="Booking inquiry — The Bilderbacks">
+        <div class="form-row">
+          <label>Your name<input type="text" name="name" autocomplete="name" required></label>
+          <label>Email<input type="email" name="email" autocomplete="email" required></label>
+        </div>
+        <label>Phone<input type="tel" name="phone" autocomplete="tel"></label>
+        <label>Church / venue<input type="text" name="venue" placeholder="Church, revival, or festival" required></label>
+        <label>Ideal date or season<input type="text" name="date" placeholder="e.g. Spring 2027"></label>
+        <label>Anything else we should know?<textarea name="message" rows="4" placeholder="Service type, expected attendance, special requests"></textarea></label>
+        <button type="submit" class="btn-fill">Send invitation &rarr;</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+    <div>
+      <ul class="contact-list" style="margin-top:0;">
         <li><span class="k">Phone</span><span class="v"><a href="tel:4797562174">479-756-2174</a></span></li>
         <li><span class="k">Email</span><span class="v"><a href="mailto:booking@thebilderbacks.org">booking@thebilderbacks.org</a></span></li>
         <li><span class="k">Booking contact</span><span class="v">Desiree Ham, Director of Communications &amp; Engagements</span></li>
       </ul>
-    </div>
-    <div>
-      <span class="eyebrow" style="display:block; margin-bottom: 16px;">Follow along</span>
+      <span class="eyebrow" style="display:block; margin: 40px 0 16px;">Follow along</span>
       <div class="social-row">
-        <a class="link-arrow" href="#">Facebook</a>
-        <a class="link-arrow" href="#">Instagram</a>
-        <a class="link-arrow" href="#">YouTube</a>
+        <a class="link-arrow" href="https://www.facebook.com/profile.php?id=100063522011609" target="_blank" rel="noopener">Facebook</a>
+        <a class="link-arrow" href="https://www.instagram.com/the_bilderbacks" target="_blank" rel="noopener">Instagram</a>
+        <a class="link-arrow" href="https://www.tiktok.com/@the.bilderbacks" target="_blank" rel="noopener">TikTok</a>
       </div>
     </div>
   </section>
@@ -129,16 +109,16 @@
     </div>
     <div class="footer-col">
       <span class="footer-heading">Listen</span>
-      <a href="#">Apple Music</a>
-      <a href="#">Spotify</a>
-      <a href="#">Amazon Music</a>
+      <a href="https://music.apple.com/us/search?term=the%20bilderbacks" target="_blank" rel="noopener">Apple Music</a>
+      <a href="https://open.spotify.com/search/The%20Bilderbacks" target="_blank" rel="noopener">Spotify</a>
+      <a href="https://music.amazon.com/search/The+Bilderbacks" target="_blank" rel="noopener">Amazon Music</a>
     </div>
     <div class="footer-col">
       <span class="footer-heading">Contact</span>
       <a href="tel:4797562174">479-756-2174</a>
       <a href="mailto:booking@thebilderbacks.org">booking@thebilderbacks.org</a>
-      <a href="#">Instagram</a>
-      <a href="#">Facebook</a>
+      <a href="https://www.instagram.com/the_bilderbacks" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.facebook.com/profile.php?id=100063522011609" target="_blank" rel="noopener">Facebook</a>
     </div>
   </div>
   <div class="footer-bottom">
@@ -151,7 +131,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="js/main.js?v=4"></script>
+<script src="js/main.js?v=5"></script>
 <script src="js/motion.js?v=2"></script>
 </body>
 </html>
